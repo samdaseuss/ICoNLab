@@ -12,6 +12,7 @@ import  clientPromise from './lib/mongodb';
 // import EmailProvider from 'next-auth/providers/email'
 
 export default NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     // OAuth authentication providers...
