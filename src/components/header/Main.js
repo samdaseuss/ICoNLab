@@ -10,7 +10,7 @@ export default function Main() {
                     <h1>ICoN</h1>
                     <span>
                         <h6>&nbsp;</h6>
-                        <h6>Intelligent Computing  &amp; </h6>
+                        <h6>Intelligent Computing &amp;</h6>
                         <h6>Networking Lab</h6>
                     </span>
                     </span>
@@ -31,7 +31,7 @@ export default function Main() {
                 </li>
                 <li className={styles.li}>
                     <Link href="/join">
-                        <span>연구원 지원하기</span>
+                        <span>연구원 신청</span>
                     </Link>
                 </li>
                 <li className={styles.li}

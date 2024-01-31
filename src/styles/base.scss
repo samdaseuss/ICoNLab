@@ -11,10 +11,17 @@ $powder-blue: #9EB9D4;
 $my-sisters-blue: #35404E;
 
 .container {
-    max-width: 1500px;
+    max-width: 2500px;
     min-height: 100vh;
     background-size: cover;
     background-image: url("../../public/images/back2.jpg");
+
+    @media (min-width: 1232px) {
+        img {
+            max-width: 800px;
+            margin-left: 200px
+        }
+    }
 }
 
 .btn_primary {
