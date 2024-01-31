@@ -22,14 +22,14 @@ export default function Index() {
         })
 
         timeline
-        .from(background.current,{clipPath: `inset(5% 5% 5% 5%)`})
+        .from(background.current,{clipPath: `inset(5%)`})
         .to(introImage.current,{height: "60px"},0)}, [])
 
     return (
         <div className={styles.homeHeader}>
             <div className={styles.backgroundImage} ref={background}>
                 <Image
-                    src={'/images/pieces.jpwg'}
+                    src={'/images/pieces.jpg'}
                     fill={true}
                     alt="background image"
                     priority={true}

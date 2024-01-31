@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import { useSelector } from "react-redux";
 
 export default function Main() {
     return <div className={styles.main}>

@@ -26,18 +26,18 @@ export default function Home({country}) {
     <>
       <Header country={country} />
       {/* { session ? "로그인 상태입니다." : "로그아웃 상태입니다."} */}
-      <div className={styles.home}>
+      {/* <div className={styles.home}>
         <div className={styles.container}>
           <Intro />
           <Description />
           <Project />
         </div>
-      </div>
-      {/* <div className={styles.home}>
+      </div> */}
+      <div className={styles.home}>
         <div className={styles.container}>
           <Main />
         </div>
-      </div> */}
+      </div>
       <Footer country={country} />
     </>
   );
