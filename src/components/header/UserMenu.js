@@ -24,8 +24,7 @@ export default function UserMenu({session}) {
                     <button className={styles.btn_primary}>회원가입</button>
                     <button 
                         className={styles.btn_outlined}
-                        onClick={() => signIn()}
-                    >로그인</button>
+                        onClick={() => signIn()}>로그인</button>
                 </div>
             )
         }

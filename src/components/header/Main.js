@@ -10,7 +10,8 @@ export default function Main() {
                     <h1>ICoN</h1>
                     <span>
                         <h6>&nbsp;</h6>
-                        <h6>Intelligent Computing &amp;</h6>
+                        <h6>Intelligent</h6>
+                        <h6>Computing &amp;</h6>
                         <h6>Networking Lab</h6>
                     </span>
                     </span>

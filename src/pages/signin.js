@@ -128,7 +128,7 @@ export default function signin({providers}) {
                                 )}
                             </Formik>
                             <div className={styles.login__socials}>
-                                <span className={styles.or}>간편하게 시작하세요.</span>
+                                <span className={styles.or}>소셜로 시작하기</span>
                                 <div className={styles.login__socials_wrap}>
                                 { providers.map((provider)=>(
                                     <div key={provider.name}>
