@@ -1,0 +1,116 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: none;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.btn_primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #2f82ff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.btn_outlined {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #fff;
+  color: #2f82ff;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.mainSwiper .swiper-slide img {
+  height: 300px !important;
+  border-radius: 10px !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
+.mainSwiper .swiper-pagination-bullet {
+  width: 9px !important;
+  border-radius: 5px !important;
+}
+.mainSwiper .swiper-pagination-bullet-active {
+  background: #2f82ff !important;
+  width: 13px !important;
+}
+.mainSwiper .swiper-button-prev,
+.mainSwiper .swiper-button-next {
+  color: #fff !important;
+  transform: scale(0.5) !important;
+  width: 50px !important;
+  height: 80px !important;
+  transition: 0.2s;
+  background: rgba(102, 102, 102, 0.354) !important;
+  width: 50px !important;
+  height: 80px !important;
+}
+.mainSwiper .swiper-button-prev {
+  left: -13px;
+}
+.mainSwiper .swiper-button-next {
+  right: -13px;
+}/*# sourceMappingURL=base.css.map */
