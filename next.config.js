@@ -6,7 +6,7 @@ const nextConfig = {
   sassOptions: {
     incluePaths: [path.join(__dirname,'styles')],
     prependData: `@import "./src/styles/base.scss";`,
-  }
+  },
 }
 
 module.exports = nextConfig;
