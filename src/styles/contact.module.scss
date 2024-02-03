@@ -1,0 +1,147 @@
+.section {
+    padding: 1rem;
+    overflow: hidden;
+    min-height: 100vh;
+    padding-top: 5rem;
+
+    @media (min-width: 650px) {
+        padding: 5rem;
+    }
+
+    &__header {
+        &_title {
+            font-weight: 700;
+            font-size: 17px;
+            color: #666;
+        }
+
+        &_subtitle {
+            font-size: 27px;
+            font-weight: 700;
+        }
+    }
+}
+
+.contact {
+    position: relative;
+    background: linear-gradient(45deg, #F17C58, #E94584, #24AADB, #27DBB1, #FFDC18, #FF3706);
+    background-size: 600% 100%;
+    animation: gradient 30s linear infinite;
+    animation-direction: alternate;
+
+    @keyframes gradient {
+        0% {
+            background-position: 0%
+        }
+
+        100% {
+            background-position: 100%
+        }
+    }
+
+    font-family: sans-serif;
+
+    &__header {
+        margin-bottom: 3rem;
+    }
+}
+
+.form {
+    &__info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 20px;
+        font-weight: 500;
+
+        input {
+            font-size: 2vw;
+            font-weight: inherit;
+            width: 90%;
+            border: none;
+            background: transparent;
+            border-bottom: 1px solid #000;
+            color: #444;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &__flex {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #000;
+            font-size: 2.2vw;
+            color: #444;
+            resize: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .coolButton {
+            position: relative;
+            left: 50%;
+            border: none;
+            cursor: pointer;
+            width: 175px;
+            height: 120px;
+            background: none;
+            color: #fff;
+
+            &:before,
+            &:after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            &:before {
+                padding-top: 35px;
+                content: "메일 보내기";
+                background: #fff;
+                border-radius: 58% 42% 55% 45% / 56% 45% 55% 44%;
+            }
+
+            &:hover:before {
+                clip-path: polygon(20% 0%,
+                        80% 0%,
+                        100% 20%,
+                        100% 80%,
+                        80% 100%,
+                        20% 100%,
+                        0% 80%,
+                        0% 20%);
+                transform: rotate(20deg);
+                transition: transform 0.5s;
+            }
+
+            font-weight: 900;
+            font-size: 20px;
+
+            &:before {
+                background: #000;
+            }
+
+            &:after {
+                display: none;
+            }
+
+            &:hover:before {
+                color: #fff;
+                background: #000;
+            }
+        }
+    }
+}

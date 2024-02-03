@@ -31,7 +31,7 @@ export default function Main() {
                     <span>연구환경</span>
                 </li>
                 <li className={styles.li}>
-                    <Link href="/join">
+                    <Link href="/contact">
                         <span>연구원 신청</span>
                     </Link>
                 </li>
