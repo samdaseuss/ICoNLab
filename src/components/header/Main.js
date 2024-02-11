@@ -25,7 +25,7 @@ export default function Main() {
                     <span>연구실 멤버</span>
                 </li>
                 <li className={styles.li}>
-                        <span>프로젝트</span>
+                    <span>프로젝트</span>
                 </li>
                 <li className={styles.li}>
                     <span>연구환경</span>

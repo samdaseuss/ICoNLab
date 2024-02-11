@@ -4,17 +4,18 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Index() {
 
     const background = useRef(null);
     const introImage = useRef(null);
 
     useLayoutEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
 
         const timeline = gsap.timeline({
             scrollTrigger: {
-                trigger: '.backgroundImage',
+                trigger: document.documentElement,
                 scrub: true,
                 start: "top",
                 end: "+=500px",
@@ -23,7 +24,8 @@ export default function Index() {
 
         timeline
         .from(background.current,{clipPath: `inset(5%)`})
-        .to(introImage.current,{height: "60px"},0)}, [])
+        .to(introImage.current,{height: "60px"},0)
+    }, [])
 
     return (
         <div className={styles.homeHeader}>
