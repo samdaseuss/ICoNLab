@@ -13,8 +13,7 @@ $my-sisters-blue: #35404E;
 .container {
     max-width: 2500px;
     min-height: 100vh;
-    background-size: cover;
-    background-image: url("../../public/images/back2.jpg");
+    background-color: #000008;
 
     @media (min-width: 1232px) {
         img {
