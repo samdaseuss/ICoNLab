@@ -9,14 +9,10 @@ import db from '../../utils/db';
 import Product from '../../models/Product';
 import { useEffect } from "react";
 
-import Intro from '../components/intro';
-import Description from '../components/description';
-import Project from '../components/project';
-
 
 export default function Home({country}) {
-  const { data: session } = useSession();
   
+  const { data: session } = useSession();
 
   useEffect( () => {(
     async () => {
