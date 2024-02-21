@@ -1,50 +1,52 @@
 import NextAuth from 'next-auth';
-import AppleProvider from 'next-auth/providers/apple';
-import FacebookProvider from 'next-auth/providers/facebook';
-import GoogleProvider from 'next-auth/providers/google';
-import KakaoProvider from 'next-auth/providers/kakao';
-import NaverProvider from 'next-auth/providers/naver';
 import GitHubProvider from "next-auth/providers/github";
-import Auth0Provider from "next-auth/providers/auth0";
+import CredentialsProvider from "next-auth/providers/credentials";
+import User from "../../../../models/User";
+import bcrypt from "bcrypt";
+import db from "../../../../utils/db";
 
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import  clientPromise from './lib/mongodb';
-// import EmailProvider from 'next-auth/providers/email'
+
+
+db.connectDb();
 
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "yunjioh"
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "opendata.yunjioh@gmail.com"
+        }
+      },
+      async authorize(credentials, req) {
+
+        const email = credentials.email;
+        const password = credentials.password;
+        const user = await User.findOne({email});
+
+        if (user) {
+          return SignInUser({ password, user });
+        } else {
+          throw new Error("가입되지 않은 이메일입니다.");
+        }
+      }
+    }),
     // OAuth authentication providers...
-    // KakaoProvider({
-    //   clientId: process.env.KAKAO_CLIENT_ID,
-    //   clientSecret: process.env.KAKAO_CLIENT_SECRET
-    // }),
-    // NaverProvider({
-    //   clientId: process.env.NAVER_CLIENT_ID,
-    //   clientSecret: process.env.NAVER_CLIENT_SECRET
-    // }),
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET
     }),
-    // Auth0Provider({
-    //   clientId: process.env.AUTH0_CLIENT_ID,
-    //   clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    //   issuer: process.env.AUTH0_ISSUER
-    // }),
-    // AppleProvider({
-    //   clientId: process.env.APPLE_ID,
-    //   clientSecret: process.env.APPLE_SECRET
-    // }),
-    // FacebookProvider({
-    //   clientId: process.env.FACEBOOK_ID,
-    //   clientSecret: process.env.FACEBOOK_SECRET
-    // }),
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_ID,
-    //   clientSecret: process.env.GOOGLE_SECRET
-    // }),
   ],
   pages: {
     signIn: '/signin',
@@ -52,4 +54,19 @@ export default NextAuth({
   session: {
     strategy: 'jwt'
   }
-})
+});
+
+const SignInUser = async({password, user}) => {
+  
+  if (!user.password) throw new Error("이메일 또는 패스워드가 일치하지 않습니다.");
+
+  const testPassword = await bcrypt.compare(
+    password,
+    user.password
+  );
+
+  if (!testPassword) throw new Error("이메일 또는 패스워드가 일치하지 않습니다.");
+
+  return user;
+  
+}
