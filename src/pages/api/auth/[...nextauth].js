@@ -29,20 +29,24 @@ export default NextAuth({
           placeholder: "opendata.yunjioh@gmail.com"
         }
       },
-      async authorize(credentials, req) {
-
+      async authorize(
+        credentials,
+        req
+      ){
         const email = credentials.email;
         const password = credentials.password;
         const user = await User.findOne({email});
-
         if (user) {
-          return SignInUser({ password, user });
+          return SignInUser({ 
+            password,
+            user
+          });
         } else {
           throw new Error("가입되지 않은 이메일입니다.");
         }
       }
     }),
-    // OAuth authentication providers...
+    // OAuth authentication providers
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET
