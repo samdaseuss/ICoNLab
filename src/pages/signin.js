@@ -1,17 +1,18 @@
+import styles from "../styles/signin.module.scss";
 import Link from "next/link";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import LoginInput from "@/components/inputs/loginInput";
-import styles from "../styles/signin.module.scss";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { Formik, Form } from "formik";
-import * as Yup from 'yup';
 import { useState } from "react";
 import CircledIconBtn from "@/components/buttons/circledIconBtn";
 import { getProviders, signIn } from "next-auth/react";
+import * as Yup from "yup";
 import axios from "axios";
 import DotLoaderSpinner from "@/components/loader/dotLoader";
-import Router from 'next/router';
+import Router from "next/router";
+
 
 const initialvalues = {
     login_email: "",
@@ -20,13 +21,24 @@ const initialvalues = {
     email: "",
     conf_password: "",
     success: "",
-    error: ""
+    error: "",
+    login_error: "",
 };
 
+
 export default function signin({providers}) {
-    const [ loading, setLoading ] = useState(false); 
-    const [ user, setUser ] = useState(initialvalues);
-    const { 
+
+    const [ 
+        user,
+        setUser
+    ] = useState(initialvalues);
+
+    const [ 
+        loading,
+        setLoading
+    ] = useState(false);
+
+    const {
         login_email,
         login_password,
         name,
@@ -34,16 +46,32 @@ export default function signin({providers}) {
         password,
         conf_password,
         success,
-        error
+        error,
+        login_error
     } = user;
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser({...user, [name]: value });
+
+
+    const handleChange = (e)=>{
+        const { 
+            name,
+            value
+        } = e.target;
+        setUser({
+            ...user,
+            [name]: value
+        });
     }
+
     const loginValidation = Yup.object({
-        login_email: Yup.string().required("이메일 주소가 필요합니다").email('유효한 이메일 주소를 입력해주세요'),
-        login_password: Yup.string().required("패스워드를 입력해주세요")
-    })
+        login_email:
+            Yup.string()
+            .required("이메일 주소가 필요합니다")
+            .email('유효한 이메일 주소를 입력해주세요'),
+        login_password:
+            Yup.string()
+            .required("패스워드를 입력해주세요")
+    });
+
     const registerValidation = Yup.object({
         name: Yup.string()
           .required("이름을 입력해주세요.")
@@ -61,25 +89,81 @@ export default function signin({providers}) {
           .required("비밀번호를 다시 한번 입력해주세요.")
           .oneOf([Yup.ref("password")], "비밀번호가 다릅니다."),
     });
+
     const signUpHandler = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.post('/api/auth/signup', {
+            const { data } = await axios.post(
+                '/api/auth/signup', {
                 name,
                 email,
                 password,
             });
-            setUser({...user, error: "", success: data.message})
+            setUser({
+                ...user,
+                error: "",
+                success: data.message
+            });
             setLoading(false);
-            setTimeout(() => { Router.push("/"); }, 2000);
+
+            setTimeout(() => { 
+                Router.push("/");
+            }, 2000);
         } catch(error) {
             setLoading(false);
-            setUser({...user, success: "", error: error.response.data.message} );
+            setUser({
+                ...user,
+                success: "", 
+                error: error.response.data.message
+            });
         }
     }
+
+    const signInHandler = async () => {
+        try {
+            setLoading(true);
+            let options = {
+                redirect: false,
+                email: login_email,
+                password: login_password
+            };
+            const res = await signIn(
+                "credentials",
+                options
+            );
+            setUser({
+                ...user,
+                success: "",
+                error: ""
+            });
+            setLoading(false);
+
+            if(res?.error) {
+                setLoading(false);
+                setUser({
+                    ...user,
+                    login_error: res?.error
+                });
+            } else {
+                Router.push("/");
+            }
+        } catch(error) {
+            setLoading(false);
+            setUser({
+                ...user,
+                success: "",
+                error: error
+                        .response
+                        .data
+                        .message
+            });
+        }
+    }
+    
+
     return (
         <>
-        { loading && <DotLoaderSpinner loading={loading}/> }
+            { loading && <DotLoaderSpinner loading={loading}/> }
             <Header country="South Korea"/>
                 <div className={styles.login}>
                     <div className={styles.login__container}>
@@ -90,19 +174,24 @@ export default function signin({providers}) {
                                 </Link>
                             </div>
                             <span>
-                                클릭 시 ICoN 랩 메인 화면으로 돌아갑니다.
+                                클릭 시 ICoN 랩 메인으로 돌아갑니다.
                             </span>
                         </div>
                         <div className={styles.login__form}>
                             <h1>연구원 로그인</h1>
-                            <p>ICoN Lab의 연구원이시면 로그인 후 이용하세요.</p>
+                            <p>ICoN Lab의 연구원은 로그인 후 이용하세요.</p>
                             <Formik
                                 enableReinitialize
                                 initialValues={{
                                     login_email,
                                     login_password,
                                 }}
-                                validationSchema={loginValidation}
+                                validationSchema={
+                                    loginValidation
+                                }
+                                onSubmit={()=>(
+                                    signInHandler()
+                                )}
                             >
                                 {(form) => (
                                     <Form>
@@ -110,25 +199,37 @@ export default function signin({providers}) {
                                           type="text"
                                           name="login_email"
                                           icon="email"
-                                          placeholder="Email Address"
+                                          placeholder="이메일 주소(Email Address)"
                                           onChange={handleChange}
                                         />
                                         <LoginInput
                                           type="text"
                                           name="login_password"
                                           icon="password"
-                                          placeholder="Password"
+                                          placeholder="패스워드(Password)"
                                           onChange={handleChange}
                                         />
-                                        <CircledIconBtn type="submit" text="로그인하기" />
+                                        <CircledIconBtn
+                                            type="submit"
+                                            text="로그인하기"
+                                        />
+                                        { login_error && (
+                                            <span className="style.error">
+                                                {login_error}
+                                            </span>
+                                        )}
                                         <div className={styles.forgot}>
-                                            <Link href="/forget">패스워드를 잃어버렸습니다.</Link>
+                                            <Link href="/forget">
+                                                이런, 패스워드를 잃어버렸습니다!
+                                            </Link>
                                         </div>
                                     </Form>
                                 )}
                             </Formik>
                             <div className={styles.login__socials}>
-                                <span className={styles.or}>소셜로 시작하기</span>
+                                <span className={styles.or}>
+                                    소셜로 시작하기
+                                </span>
                                 <div className={styles.login__socials_wrap}>
                                 { providers.map((provider)=>(
                                     <div key={provider.name}>
@@ -140,7 +241,8 @@ export default function signin({providers}) {
                                             {provider.name}로 로그인하기
                                         </button>
                                     </div>
-                                ))}
+                                ))[1]
+                                }
                                 </div>
                             </div>
                         </div>
@@ -168,31 +270,35 @@ export default function signin({providers}) {
                                           type="text"
                                           name="name"
                                           icon="user"
-                                          placeholder="Full Name"
+                                          placeholder="이름(Full Name)"
                                           onChange={handleChange}
                                         />
                                         <LoginInput
                                           type="text"
                                           name="email"
                                           icon="email"
-                                          placeholder="Email Address"
+                                          placeholder="이메일 주소(Email Address)"
                                           onChange={handleChange}
                                         />
                                         <LoginInput
                                           type="password"
                                           name="password"
                                           icon="password"
-                                          placeholder="password"
+                                          placeholder="패스워드(Password)"
                                           onChange={handleChange}
                                         />
                                         <LoginInput
                                           type="password"
                                           name="conf_password"
                                           icon="password"
-                                          placeholder="Re-Type password"
+                                          placeholder="패스워드 확인(Re-type password)"
                                           onChange={handleChange}
                                         />
                                         <CircledIconBtn type="submit" text="회원가입" />
+                                        {
+                                            login_error && (
+                                                <span className={styles.error}>{login_error}</span>
+                                        )}
                                     </Form>
                                 )}
                             </Formik>
